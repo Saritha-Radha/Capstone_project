@@ -118,6 +118,8 @@ def customer_zipcode_month_year(zipcode,month,year):
      .option("password", "password")\
      .load()
     data_table1.show(n=100)
+    if data_table1.count()==0:
+        print("No Records found!")
 
 #Function to check for the valid transaction Type
 def check_transactiontype_valid():
@@ -156,6 +158,8 @@ def trasactiontype_details(transactiontype):
         .option("password", "password")\
         .load()
     data_trasactiontype.show()
+    if data_trasactiontype.count()==0:
+        print("No Records found!")
 
 #Function to validate State abbreviation
 def check_state_valid():
@@ -196,6 +200,8 @@ def trasactiontype_statewise(state):
         .option("password", "password")\
         .load()
     data_trasaction_state.show()
+    if data_trasaction_state.count()==0:
+        print("No Records found!")
 
 # Function to validate customer input 
 def check_customer_valid():
@@ -233,6 +239,8 @@ def customer_details(customer_firstname,customer_lastname,customer_ssn):
         .option("password", "password")\
         .load()
     data_customer_details.show(truncate=False,vertical=True)
+    if data_customer_details.count()==0:
+        print("No Records found!")
 
 #Function to validate SSN
 def check_ssn():
@@ -486,6 +494,8 @@ def credit_bill_month_year():
     print('\t\t\t+-' + '-' * 61+ '-+')
     print()
     data_monthly_bill_details.show(n=100)
+    if data_monthly_bill_details.count()==0:
+        print("No Records found!")
   
     df_total = data_monthly_bill_details.withColumn("Transaction Value", data_monthly_bill_details['Transaction Value'].cast('integer'))
     df_total.select(func.sum('Transaction Value').alias('Total Amount')).show()
@@ -517,6 +527,8 @@ def transaction_customer():
     print('\t\t\t+-' + '-' * 61+ '-+')
     print()
     monthly_bill_details.show(n=100)
+    if monthly_bill_details.count()==0:
+        print("No Records found!")
 
 
 
