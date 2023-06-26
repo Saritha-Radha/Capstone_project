@@ -400,7 +400,7 @@ def update_customer_details(customer_ssn,customer_oldphonenumber,customer_oldema
     cursor.execute(query)
     myconnection.commit()
     print(cursor.rowcount,"record(s) affected")
-    print("Updated")
+    #print("Updated")
     cursor.close()
     myconnection.close()
 
