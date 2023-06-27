@@ -9,7 +9,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as func
 from pyspark.sql.types import StructType, StructField, IntegerType, FloatType,VarcharType,TimestampType,StringType
 import mysql.connector as dbconnect
-
+from mysql.connector import Error
 #Creating the Spark Session
 spark = SparkSession.builder.appName("CreditCardSystemApp").master("local[*]").getOrCreate()
 
@@ -119,7 +119,7 @@ def customer_zipcode_month_year(zipcode,month,year):
      .load()
     data_table1.show(n=100)
     if data_table1.count()==0:
-        print("No Records found!")
+         print("There were no results for the search terms !")
 
 #Function to check for the valid transaction Type
 def check_transactiontype_valid():
@@ -159,7 +159,7 @@ def trasactiontype_details(transactiontype):
         .load()
     data_trasactiontype.show()
     if data_trasactiontype.count()==0:
-        print("No Records found!")
+        print("There were no results for the search terms !")
 
 #Function to validate State abbreviation
 def check_state_valid():
@@ -201,7 +201,7 @@ def trasactiontype_statewise(state):
         .load()
     data_trasaction_state.show()
     if data_trasaction_state.count()==0:
-        print("No Records found!")
+         print("There were no results for the search terms !")
 
 # Function to validate customer input 
 def check_customer_valid():
@@ -240,7 +240,7 @@ def customer_details(customer_firstname,customer_lastname,customer_ssn):
         .load()
     data_customer_details.show(truncate=False,vertical=True)
     if data_customer_details.count()==0:
-        print("No Records found!")
+         print("There were no results for the search terms !")
 
 #Function to validate SSN
 def check_ssn():
@@ -307,11 +307,11 @@ Requirements 2.2
 
 def update_customer_details(customer_ssn,customer_oldphonenumber,customer_oldemail,customer_oldcity,customer_oldstate,customer_oldcountry,customer_address,customer_zipcode):
     print("\t\t\t Please Update Your Credentials!")
-    new_phonenumber=input("Enter the new phone number.Please use this format (XXX)-XXX-XXXX (Press enter to skip): ")
+    new_phonenumber=input("Enter the new phone number.Please use this format (XXX)XXX-XXXX (Press enter to skip): ")
     print("")
     if new_phonenumber!="":
         while not check_phonenumber(new_phonenumber):
-            print("Invalid Phone Number format.Please use this format (XXX)-XXX-XXXX")
+            print("Invalid Phone Number format.Please use this format (XXX)XXX-XXXX")
             new_phonenumber=input("Enter the new phone number(Press enter to skip): ")
             if new_phonenumber=="":
                 break
@@ -395,22 +395,25 @@ def update_customer_details(customer_ssn,customer_oldphonenumber,customer_oldema
     if(new_Zipcode)=="":
         new_Zipcode=customer_zipcode
     timeid=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print("Updated details",new_phonenumber,new_email,new_city,new_State,new_country,new_Zipcode,new_address)
+    print("The Updated details are ",new_phonenumber,new_email,new_city,new_State,new_country,new_Zipcode,new_address)
     query="UPDATE cdw_sapp_customer SET CUST_CITY='"+new_city+\
         "' ,CUST_EMAIL='"+new_email+"', CUST_PHONE='"+new_phonenumber+\
         "', CUST_STATE='"+new_State+"', CUST_ZIP="+str(new_Zipcode)+" ,FULL_STREET_ADDRESS='"+\
         new_address+"', LAST_UPDATED='"+str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))+"' where SSN like '%"+customer_ssn+"'"
-   
-    myconnection=dbconnect.connect(host='localhost',database='creditcard_capstone',user='root',password='password')
-    if myconnection.is_connected():
-        print("")
-    cursor=myconnection.cursor()
-    cursor.execute(query)
-    myconnection.commit()
+    try:
+        myconnection=dbconnect.connect(host='localhost',database='creditcard_capstone',user='root',password='password')
+        if myconnection.is_connected():
+         print("")
+         cursor=myconnection.cursor()
+         cursor.execute(query)
+         myconnection.commit()
+    except Error as e:
+        print("Error while connecting to database",e)
     print(cursor.rowcount,"record(s) affected")
     #print("Updated")
     cursor.close()
     myconnection.close()
+    print("The Updated details are ",new_phonenumber,new_email,new_city,new_State,new_country,new_Zipcode,new_address)
 
 def check_phonenumber(new_phonenumber):
     phone_pattern=r'^\(\d{3}\)\d{3}-\d{4}'
@@ -423,7 +426,7 @@ def check_phonenumber(new_phonenumber):
         return False
 def check_email(new_email):
     email_pattern=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-    print("hi")
+    
     if re.match(email_pattern,new_email):
         #print("valid email patter")
         return True
@@ -495,7 +498,7 @@ def credit_bill_month_year():
     print()
     data_monthly_bill_details.show(n=100)
     if data_monthly_bill_details.count()==0:
-        print("No Records found!")
+         print("There were no results for the search terms !")
   
     df_total = data_monthly_bill_details.withColumn("Transaction Value", data_monthly_bill_details['Transaction Value'].cast('integer'))
     df_total.select(func.sum('Transaction Value').alias('Total Amount')).show()
@@ -528,7 +531,7 @@ def transaction_customer():
     print()
     monthly_bill_details.show(n=100)
     if monthly_bill_details.count()==0:
-        print("No Records found!")
+         print("There were no results for the search terms !")
 
 
 
