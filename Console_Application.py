@@ -274,7 +274,7 @@ def check_creditcard():
          break
     return check_creditcard()
 
-# Function to retrieve customer information
+# Function to retrieve customer information to update .
 def get_customer_details(customer_ssn):
     #print("func",customer_ssn)
     query="( select FIRST_NAME as 'First Name',MIDDLE_NAME as 'Middle Name',LAST_NAME as 'Last Name',\
@@ -291,6 +291,7 @@ def get_customer_details(customer_ssn):
     print("\t\t Your Account Details ")
     if data_customer_details.count()>0:
         data_customer_details.show(vertical=True)
+        #Gets the first row of dataframe
         customer_oldphonenumber=data_customer_details.first()[5]
         customer_oldemail=data_customer_details.first()[6]
         customer_oldcity=data_customer_details.first()[7]
@@ -395,7 +396,7 @@ def update_customer_details(customer_ssn,customer_oldphonenumber,customer_oldema
     if(new_Zipcode)=="":
         new_Zipcode=customer_zipcode
     timeid=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print("The Updated details are ",new_phonenumber,new_email,new_city,new_State,new_country,new_Zipcode,new_address)
+   
     query="UPDATE cdw_sapp_customer SET CUST_CITY='"+new_city+\
         "' ,CUST_EMAIL='"+new_email+"', CUST_PHONE='"+new_phonenumber+\
         "', CUST_STATE='"+new_State+"', CUST_ZIP="+str(new_Zipcode)+" ,FULL_STREET_ADDRESS='"+\
@@ -417,7 +418,7 @@ def update_customer_details(customer_ssn,customer_oldphonenumber,customer_oldema
 
 def check_phonenumber(new_phonenumber):
     phone_pattern=r'^\(\d{3}\)\d{3}-\d{4}'
-    #print("hi")
+   
     if re.match(phone_pattern,new_phonenumber):
        # print("valid phone patter")
         return True
@@ -475,8 +476,7 @@ def check_dates(startdate):
         #print("not valid pattern")
         return False
 def credit_bill_month_year():
-    #customer_creditcard=input("Enter the last 4 digits of Credit Card Number")
-    #customer_ssn=input("Please enter last 4 digits of ssn")
+    
     customer_creditcard=check_creditcard()
     customer_ssn=check_ssn()
     month=check_month_valid()
@@ -502,7 +502,8 @@ def credit_bill_month_year():
   
     df_total = data_monthly_bill_details.withColumn("Transaction Value", data_monthly_bill_details['Transaction Value'].cast('integer'))
     df_total.select(func.sum('Transaction Value').alias('Total Amount')).show()
-  
+    
+  #Fun.req 2.2 4.Transaction made by customer between two dates.
 def transaction_customer():
     print("")
     customer_ssn=check_ssn()
