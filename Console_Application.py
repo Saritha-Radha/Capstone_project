@@ -475,6 +475,9 @@ def check_dates(startdate):
     else:
         #print("not valid pattern")
         return False
+    
+    #Func Req.4.3 Used to generate monthly bill for a credit card number for a given month and year
+    
 def credit_bill_month_year():
     
     customer_creditcard=check_creditcard()
@@ -502,7 +505,7 @@ def credit_bill_month_year():
   
     df_total = data_monthly_bill_details.withColumn("Transaction Value", data_monthly_bill_details['Transaction Value'].cast('integer'))
     df_total.select(func.sum('Transaction Value').alias('Total Amount')).show()
-    
+
   #Fun.req 2.2 4.Transaction made by customer between two dates.
 def transaction_customer():
     print("")
