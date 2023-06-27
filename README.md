@@ -158,3 +158,11 @@ Features of the dashboard include:
 ![](images/Credit%20card%20transaction%20dashboard.png)
 
 Link to the Dashboard: https://public.tableau.com/shared/S5YSYK6DB?:display_count=n&:origin=viz_share_link
+
+Challenges faced:
+Exception while deleting Spark temp directory error.
+It's a known windows error 
+https://issues.apache.org/jira/browse/SPARK-12216
+https://github.com/dotnet/spark/issues/312
+
+I changed the winutil.exe file permission using chmod command and it got resolved.
