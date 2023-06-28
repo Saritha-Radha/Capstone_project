@@ -1,4 +1,0 @@
-Python== 3.10.10
-spark==version 3.4.0
-matplotlib==3.7.1
-pandas==2.0.1
