@@ -157,8 +157,8 @@ Features of the dashboard include:
 - Interactive charts and graphs visualize trends and comparisons
 ![](images/Credit%20card%20transaction%20dashboard.png)
 
-Link to the Dashboard: https://public.tableau.com/shared/S5YSYK6DB?:display_count=n&:origin=viz_share_link
-
+Link to the Dashboard: [https://public.tableau.com/shared/S5YSYK6DB?:display_count=n&:origin=viz_share_link
+](https://public.tableau.com/views/CreditcardDataAnalysisDashboard/Creditcardtransactiondashboard?:language=en-US&:display_count=n&:origin=viz_share_link)
 Challenges faced:
 Exception while deleting Spark temp directory error.
 It's a known windows error 
